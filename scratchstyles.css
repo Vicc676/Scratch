@@ -1,5 +1,5 @@
 body {
-    background-color: (176, 188, 208);
+    background-color: rgb(176, 188, 208);
     font-family: sans-serif;
 }
 
@@ -13,43 +13,43 @@ body {
 h1 {
     color: #fffefc;
     text-align: center;
-    margin-top: 20 px;
+    margin-top: 20px;
 }
 
 
 h2 {
     color: #570303;
-    margin-bottom: 10 px;
+    margin-bottom: 10px;
 }
 
 
 .section {
-    max-width: 800 px;
-    margin: 20 px auto;
-    padding: 15 px;
-    background-color: (255, 255, 255, 0.9);
-    border-radius: 8 px;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
 }
 
 
 .photo-row {
     display: flex;
     justify-content: center;
-    gap: 20 px;
+    gap: 20px;
     flex-wrap: wrap;
 }
 
 .photo-row img {
-    width: 260 px;        
-    height: 180 px;       
+    width: 260px;        
+    height: 180px;       
     object-fit: cover;   
-    border-radius: 8 px;
+    border-radius: 8px;
 }
 
 
 
 a {
-    color: (255, 127, 0, 0.85);
+    color: rgba(255, 127, 0, 0.85);
     font-weight: bold;
 }
 
@@ -59,35 +59,35 @@ a:hover {
 
 
 .section {
-    max-width: 800 px;
-    margin: 20 px auto;
-    padding: 15 px;
-    background-color: (255, 255, 255, 0.9);
-    border-radius: 8 px;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
 }
 
 .video-section iframe {
-    margin-bottom: 40 px;
+    margin-bottom: 40px;
 }
 
 
 .framed-video {
     display: block;
-    margin: 0 auto 40 px auto;
-    border: 3 px solid #193971;
-    border-radius: 10 px;
-    box-shadow: 0 4 px 8 px (0, 0, 0, 0.15);
+    margin: 0 auto 40px auto;
+    border: 3px solid #193971;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 
 .frame {
-    border: 3 px solid #193971;
-    border-radius: 10 px;
-    padding: 15 px;
+    border: 3px solid #193971;
+    border-radius: 10px;
+    padding: 15px;
     background-color: #ffffff;
-    margin: 20 px auto;
-    max-width: 600 px;
-    box-shadow: 0 4 px 8 px (0,0,0,0.15);
+    margin: 20px auto;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
 
@@ -96,7 +96,7 @@ a:hover {
 }
 
 .tableauPlaceholder object {
-    width: 100%;
+    width: 100% !important;
     display: block;
     margin: 0 auto;
 }
@@ -106,7 +106,7 @@ a:hover {
 }
 
 .play-link {
-    font-size: 20 px;
+    font-size: 20px;
     font-weight: bold;
     color: #004cff;
     text-decoration: none;
