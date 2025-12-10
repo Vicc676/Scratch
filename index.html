@@ -3,11 +3,11 @@
     <head>
         <meta charset="UTF-8" />
         <title>Rugby Scratch Page</title> 
-        <link rel="stylesheet" href="scratchstyles.css">
+        <link rel="stylesheet" href="css/scratchstyles.css">
        
         </head>
 <body>
-    <a href="https://vicc676.github.io/IS201/">← Return To Home Page</a>
+    <a href="index.html">← Return To Home Page</a>
 
         <h1 id="top">My Scratch Page</h1>
         <div class="section skills">
@@ -70,27 +70,36 @@
     </ol>
 </div>
  
-       <div class="section photo">
+      <div class="section photo">
     <h2>Vicc In Action</h2>
-    <img src="VM13.JPG" width="480">
-    <img src="VM10.jpg" alt="Victor in a rugby match" width="480">       
+
+    <div class="photo-row">
+        <img src="VM13.JPG">
+         <img src="VM2025.JPG" alt="Ball setup Vic">
+        <img src="VM10.jpg" alt="Victor in a rugby match">
+    </div>
 </div>
+
         
-        
-<div class="section video-section">
+        <div class="section video-section">
     <h2>My Rugby Highlight Video</h2>
+
     <iframe 
+        class="framed-video"
         width="560" 
         height="315"
         src="https://www.youtube.com/embed/hSgA3myXo_k"
         title="My Highlight Video"
-        allowfullscreen></iframe> 
-    
-    <div class="section tableau">
+        allowfullscreen>
+    </iframe>
+</div>
+
+            <div class="section tableau">
     <h2>My Rugby Tableau Dashboard</h2>
 
-    <div class='tableauPlaceholder' id='viz1765316586714' style='position: relative'>
-        <noscript>
+    <div class="frame">
+        <div class="tableauPlaceholder" id="viz1765316586714">
+             <noscript>
             <a href='#'>
                 <img alt='Rugby Stats Dashboard' src='https://public.tableau.com/static/images/VM/VM_Rugby_Stats/RugbyScoringDashboard/1_rss.png' style='border: none' />
             </a>
@@ -111,9 +120,7 @@
             <param name='language' value='en-US' />
             <param name='filter' value='publish=yes' />
         </object>
-    </div>
-
-    <script type='text/javascript'>
+         <script type='text/javascript'>
         var divElement = document.getElementById('viz1765316586714');
         var vizElement = divElement.getElementsByTagName('object')[0];
 
@@ -137,7 +144,9 @@
         scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
         vizElement.parentNode.insertBefore(scriptElement, vizElement);
     </script>
-        <div class="section">
+        </div>
+    </div>
+</div>
             
    <div class="section">
        <h2>Rugby Wordle Mini Game</h2>
@@ -145,22 +154,15 @@
 
     <p>
         <a href="rugby-wordle.html" style="font-size: 20px; font-weight: bold; color: #004cff;">
-            ▶ Play 
+            ▶ Play Now  
         </a>
     </p>
 </div>
 
-</div>
+<div><p><a href="#top">Back to Top</a></p></div>            
+    
+<body>
 
-</div>
-
-    <p><a href="#top">Back to Top</a></p>
-</div>
-
-
-
-
-
-
-
+    <html>
+        
 
