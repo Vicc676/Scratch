@@ -1,0 +1,77 @@
+body {
+    background-color: rgb(176, 188, 208);
+    font-family: sans-serif;
+}
+
+/* Style #1 – body: background + font family */
+body {
+    background-color: #193971;
+    font-family: sans-serif;
+    margin: 0;
+}
+
+/* Style #2 – main headings with font color */
+h1 {
+    color: #fbff00;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Style #3 – section headings with another color */
+h2 {
+    color: #fe0000;
+    margin-bottom: 10px;
+}
+
+/* Style #4 – generic section box styling */
+.section {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+}
+
+/* Extra style – image centering */
+.photo img {
+    display: block;
+    margin: 0 auto;
+    border-radius: 8px;
+}
+
+/* Extra style – links */
+a {
+    color: #ff8d00;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* All sections – already matching nicely */
+.section {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+}
+
+/* Keep Tableau centered and not too huge */
+.tableauPlaceholder {
+    max-width: 75%;
+    margin: 0 auto;
+}
+
+/* Slightly taller so the whole dashboard shows comfortably */
+.tableauViz {
+    width: 100% !important;
+    height: 380px !important;
+}
+
+.video-center iframe {
+    display: block;
+    margin: 0 auto;
+}
+

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rugby Wordle – Mini Game</title>
+    <style>
+        /* ===== GENERAL PAGE STYLES ===== */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #193971, #0b5f8a);
+            color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            max-width: 500px;
+            width: 90%;
+            background: rgba(255,255,255,0.97);
+            color: #222;
+            margin-top: 40px;
+            padding: 20px 24px 24px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 0;
+            color: #193971;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 16px;
+        }
+
+        /* ===== GRID STYLES ===== */
+        #grid {
+            display: grid;
+            grid-template-rows: repeat(6, 1fr);
+            row-gap: 6px;
+            justify-items: center;
+            margin-bottom: 16px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            column-gap: 6px;
+        }
+
+        .tile {
+            width: 45px;
+            height: 45px;
+            border-radius: 6px;
+            border: 2px solid #b0bec5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            background-color: #eceff1;
+        }
+
+        .tile.correct {
+            background-color: #2e7d32; /* green */
+            border-color: #2e7d32;
+            color: #fff;
+        }
+
+        .tile.present {
+            background-color: #f9a825; /* yellow */
+            border-color: #f9a825;
+            color: #fff;
+        }
+
+        .tile.absent {
+            background-color: #455a64; /* gray-blue */
+            border-color: #455a64;
+            color: #fff;
+        }
+
+        /* ===== CONTROLS ===== */
+        .controls {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            text-transform: uppercase;
+        }
+
+        button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .btn-guess {
+            background-color: #193971;
+            color: #fff;
+        }
+
+        .btn-reset {
+            background-color: #eceff1;
+            color: #333;
+        }
+
+        .btn-guess:hover {
+            background-color: #102449;
+        }
+
+        .btn-reset:hover {
+            background-color: #d0d3d6;
+        }
+
+        /* ===== MESSAGE & FOOTER ===== */
+        #message {
+            min-height: 40px;
+            margin-top: 4px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .info {
+            background-color: #e3f2fd;
+            color: #0d47a1;
+        }
+
+        .success {
+            background-color: #e8f5e9;
+            color: #1b5e20;
+        }
+
+        .error {
+            background-color: #ffebee;
+            color: #b71c1c;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 14px;
+            font-size: 0.9rem;
+            color: #193971;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .small-note {
+            font-size: 0.75rem;
+            color: #777;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <h1>Rugby Wordle</h1>
+        <p class="subtitle">
+            Guess the secret 5-letter rugby related word.<br>
+            Green = right letter & spot, Yellow = right letter, wrong spot.
+        </p>
+
+        <div id="grid"></div>
+
+        <div class="controls">
+            <input type="text" id="guessInput" maxlength="5" placeholder="Type 5 letters">
+            <button class="btn-guess" id="guessBtn">Guess</button>
+            <button class="btn-reset" id="resetBtn">Reset</button>
+        </div>
+        
+        <div id="message" class="info">
+    Game ready! Enter a 5-letter word and click <strong>Guess</strong>.
+</div>
+
+<a href="scratch.html" class="back-link">← Back to Scratch Page</a>
+
+    <script>
+        // ===== GAME CONFIG =====
+        const WORD_LENGTH = 5;
+        const MAX_GUESSES = 6;
+        const WORDS = ["RUGBY", "SCRUM", "MAULS", "KICKS", "TRIES", "FIELD", "TEAMS", "BLIND", "PITCH", "TOUCH", "MATCH", "METER", "PROPS", "WINGS", "POACH", "PLACE"];
+
+        let solution = "";
+        let currentRow = 0;
+        let gameOver = false;
+
+        const grid = document.getElementById("grid");
+        const guessInput = document.getElementById("guessInput");
+        const guessBtn = document.getElementById("guessBtn");
+        const resetBtn = document.getElementById("resetBtn");
+        const messageDiv = document.getElementById("message");
+
+        // ===== INIT GRID =====
+        function createGrid() {
+            grid.innerHTML = "";
+            for (let r = 0; r < MAX_GUESSES; r++) {
+                const row = document.createElement("div");
+                row.classList.add("row");
+                row.dataset.row = r;
+                for (let c = 0; c < WORD_LENGTH; c++) {
+                    const tile = document.createElement("div");
+                    tile.classList.add("tile");
+                    tile.dataset.row = r;
+                    tile.dataset.col = c;
+                    row.appendChild(tile);
+                }
+                grid.appendChild(row);
+            }
+        }
+
+        // ===== UTIL =====
+        function setMessage(text, type = "info") {
+            messageDiv.textContent = text;
+            messageDiv.className = type;
+        }
+
+        function pickSolution() {
+            const index = Math.floor(Math.random() * WORDS.length);
+            solution = WORDS[index];
+            console.log("Solution (for testing):", solution); // you can ignore this or delete it
+        }
+
+        function isValidGuess(guess) {
+            return /^[A-Z]{5}$/.test(guess);
+        }
+
+        // Simple Wordle-style coloring
+        function evaluateGuess(guess) {
+            const result = Array(WORD_LENGTH).fill("absent");
+            const solutionChars = solution.split("");
+            const guessChars = guess.split("");
+
+            // First pass: correct letters (green)
+            for (let i = 0; i < WORD_LENGTH; i++) {
+                if (guessChars[i] === solutionChars[i]) {
+                    result[i] = "correct";
+                    solutionChars[i] = null; // remove matched
+                    guessChars[i] = null;
+                }
+            }
+
+            // Second pass: present letters (yellow)
+            for (let i = 0; i < WORD_LENGTH; i++) {
+                if (guessChars[i] !== null) {
+                    const index = solutionChars.indexOf(guessChars[i]);
+                    if (index !== -1) {
+                        result[i] = "present";
+                        solutionChars[index] = null;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        function renderGuess(guess, colors) {
+            const rowTiles = grid.querySelectorAll(`.tile[data-row='${currentRow}']`);
+            for (let i = 0; i < WORD_LENGTH; i++) {
+                rowTiles[i].textContent = guess[i];
+                rowTiles[i].classList.add(colors[i]);
+            }
+        }
+
+        // ===== GAME LOGIC =====
+        function handleGuess() {
+            if (gameOver) {
+                setMessage("Game over! Click Reset to play again.", "info");
+                return;
+            }
+
+            let guess = guessInput.value.toUpperCase().trim();
+
+            if (!isValidGuess(guess)) {
+                setMessage("Please enter a valid 5-letter word (letters only).", "error");
+                return;
+            }
+
+            const colors = evaluateGuess(guess);
+            renderGuess(guess, colors);
+
+            if (guess === solution) {
+                setMessage("TRY! You guessed the word: " + solution + ". Well played! 🏉", "success");
+                gameOver = true;
+                return;
+            }
+
+            currentRow++;
+
+            if (currentRow >= MAX_GUESSES) {
+                setMessage("Full time! The word was: " + solution + ". Keep training. 💪", "error");
+                gameOver = true;
+            } else {
+                setMessage("Nice attempt. Keep reading the field and try again.", "info");
+            }
+
+            guessInput.value = "";
+            guessInput.focus();
+        }
+
+        function resetGame() {
+            currentRow = 0;
+            gameOver = false;
+            createGrid();
+            pickSolution();
+            setMessage("New match! Guess a 5-letter rugby word.", "info");
+            guessInput.value = "";
+            guessInput.focus();
+        }
+
+        // ===== EVENT LISTENERS =====
+        guessBtn.addEventListener("click", handleGuess);
+        resetBtn.addEventListener("click", resetGame);
+
+        guessInput.addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                handleGuess();
+            }
+        });
+
+        // ===== START GAME =====
+        createGrid();
+        pickSolution();
+        setMessage("Game ready! Guess a 5-letter rugby word.", "info");
+    </script>
+</body>
+</html>
