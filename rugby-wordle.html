@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Rugby Wordle – Mini Game</title>
     <style>
-        /* ===== GENERAL PAGE STYLES ===== */
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -39,8 +38,7 @@
             color: #555;
             margin-bottom: 16px;
         }
-
-        /* ===== GRID STYLES ===== */
+        
         #grid {
             display: grid;
             grid-template-rows: repeat(6, 1fr);
@@ -70,24 +68,23 @@
         }
 
         .tile.correct {
-            background-color: #2e7d32; /* green */
+            background-color: #2e7d32; 
             border-color: #2e7d32;
             color: #fff;
         }
 
         .tile.present {
-            background-color: #f9a825; /* yellow */
+            background-color: #f9a825; 
             border-color: #f9a825;
             color: #fff;
         }
 
         .tile.absent {
-            background-color: #455a64; /* gray-blue */
+            background-color: #455a64; 
             border-color: #455a64;
             color: #fff;
         }
-
-        /* ===== CONTROLS ===== */
+        
         .controls {
             display: flex;
             gap: 8px;
@@ -129,8 +126,7 @@
         .btn-reset:hover {
             background-color: #d0d3d6;
         }
-
-        /* ===== MESSAGE & FOOTER ===== */
+        
         #message {
             min-height: 40px;
             margin-top: 4px;
@@ -194,10 +190,10 @@
     Game ready! Enter a 5-letter word and click <strong>Guess</strong>.
 </div>
 
-<a href="scratch.html" class="back-link">← Back to Scratch Page</a>
+<a href="index.html" class="back-link">← Back to Scratch Page</a>
 
     <script>
-        // ===== GAME CONFIG =====
+        
         const WORD_LENGTH = 5;
         const MAX_GUESSES = 6;
         const WORDS = ["RUGBY", "SCRUM", "MAULS", "KICKS", "TRIES", "FIELD", "TEAMS", "BLIND", "PITCH", "TOUCH", "MATCH", "METER", "PROPS", "WINGS", "POACH", "PLACE"];
@@ -211,8 +207,7 @@
         const guessBtn = document.getElementById("guessBtn");
         const resetBtn = document.getElementById("resetBtn");
         const messageDiv = document.getElementById("message");
-
-        // ===== INIT GRID =====
+ 
         function createGrid() {
             grid.innerHTML = "";
             for (let r = 0; r < MAX_GUESSES; r++) {
@@ -229,8 +224,7 @@
                 grid.appendChild(row);
             }
         }
-
-        // ===== UTIL =====
+     
         function setMessage(text, type = "info") {
             messageDiv.textContent = text;
             messageDiv.className = type;
@@ -246,7 +240,6 @@
             return /^[A-Z]{5}$/.test(guess);
         }
 
-        // Simple Wordle-style coloring
         function evaluateGuess(guess) {
             const result = Array(WORD_LENGTH).fill("absent");
             const solutionChars = solution.split("");
@@ -261,7 +254,6 @@
                 }
             }
 
-            // Second pass: present letters (yellow)
             for (let i = 0; i < WORD_LENGTH; i++) {
                 if (guessChars[i] !== null) {
                     const index = solutionChars.indexOf(guessChars[i]);
@@ -283,7 +275,7 @@
             }
         }
 
-        // ===== GAME LOGIC =====
+     
         function handleGuess() {
             if (gameOver) {
                 setMessage("Game over! Click Reset to play again.", "info");
@@ -328,8 +320,7 @@
             guessInput.value = "";
             guessInput.focus();
         }
-
-        // ===== EVENT LISTENERS =====
+        
         guessBtn.addEventListener("click", handleGuess);
         resetBtn.addEventListener("click", resetGame);
 
@@ -339,10 +330,10 @@
             }
         });
 
-        // ===== START GAME =====
         createGrid();
         pickSolution();
         setMessage("Game ready! Guess a 5-letter rugby word.", "info");
     </script>
 </body>
 </html>
+
